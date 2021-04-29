@@ -1,0 +1,30 @@
+---
+- name: install some packages
+  package:
+    name:
+      - git
+      - tree
+      - zsh
+      - zsh-completions
+      - neofetch
+      - xf86-video-qxl
+    state: latest
+- name: build user for aur_builder
+  user:
+    name: aur_builder
+    create_home: yes
+    group: wheel
+- name: edit line in file for this
+  lineinfile:
+    path: /etc/sudoers.d/11-install-aur_builder
+    line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+    create: yes
+    validate: 'visudo -cf %s'
+- name: install xorg via pacman invocation
+  pacman:
+    name: xorg
+    state: present
+- name: install plasma via pacman
+  pacman:
+    name: plasma
+    state: present

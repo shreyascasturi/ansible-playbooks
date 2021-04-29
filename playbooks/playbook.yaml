@@ -1,32 +1,34 @@
 ---
 - name: install some packages
   hosts: testmachines
-
-  tasks:
-  - name: install packages
-    package:
-      name:
-        - git
-        - tree
-        - zsh
-        - zsh-completions
-        - neofetch
-      state: latest
-  - name: build user for aur_builder
-    user:
-      name: aur_builder
-      create_home: yes
-      group: wheel
-  - name: edit line in file for this.
-    lineinfile:
-      path: /etc/sudoers.d/11-install-aur_builder
-      line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
-      create: yes
-      validate: 'visudo -cf %s'
-  - name: test aur_builder for gcc 11 installation
-    aur: name=ttf-iosevka state=present skip_pgp_check=yes
-    become: yes
-    become_user: aur_builder
+  roles:
+    - pacman
+ 
+#  tasks:
+#  - name: install packages
+#    package:
+#      name:
+#        - git
+#        - tree
+#        - zsh
+#        - zsh-completions
+#        - neofetch
+#      state: latest
+#  - name: build user for aur_builder
+#    user:
+#      name: aur_builder
+#      create_home: yes
+#      group: wheel
+#  - name: edit line in file for this.
+#    lineinfile:
+#      path: /etc/sudoers.d/11-install-aur_builder
+#      line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+#      create: yes
+#      validate: 'visudo -cf %s'
+#  - name: test aur_builder for gcc 11 installation
+#    aur: name=ttf-iosevka state=present skip_pgp_check=yes
+#    become: yes
+#    become_user: aur_builder
   #- name: uninstall packages
   #  package:
   #    name:

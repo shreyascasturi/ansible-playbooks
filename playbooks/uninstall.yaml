@@ -1,0 +1,14 @@
+---
+
+- name: uninstall some packages
+  hosts: testmachines
+  tasks:
+    - name: uninstall packages.
+      package:
+        name:
+          - git
+          - tree
+          - zsh-completions
+          - zsh
+          - neofetch
+        state: absent
